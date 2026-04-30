@@ -15,3 +15,17 @@ export function rollDice(): number {
 export function createBoard(): number[] {
   return [1, 2, 3, 4, 5, 6, 7, 8, 9];
 }
+
+export function flipNumber(board: number[],flip: number[]): number[] {
+  return board.filter((n) => !flip.includes(n));
+}
+
+export function tryFlip(
+    board: number[],
+    numbers: number[],
+    diceSum: number,
+): number[] {
+  const sum = numbers.reduce((a,b) => a + b, 0);
+  if (sum !== diceSum) return board;
+  return board.filter((n) => !numbers.includes(n));
+}

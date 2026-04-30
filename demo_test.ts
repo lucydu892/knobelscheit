@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { formattedAddition, rollDice, rollDie, createBoard } from "./demo.ts";
+import {formattedAddition, rollDice, rollDie, createBoard, flipNumber, tryFlip} from "./demo.ts";
 
 Deno.test("3 + 5 = 8", function addTest() {
   // Arrange
@@ -50,4 +50,34 @@ Deno.test("Knobelscheit startet mit Board", function () {
 
   //Then
   assertEquals(board, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+});
+
+Deno.test("zahl 3 kann umgeklappt werden", function (){
+  const board = createBoard();
+
+  //When
+  const actual = flipNumber(board, [3]);
+
+  //Then
+  assertEquals(actual, [1,2,4,5,6,7,8,9]);
+});
+
+Deno.test("ungültige Zahlen werden ignoriert", function () {
+  const board = createBoard();
+
+  //When
+  const actual = flipNumber(board, [10]);
+
+  //Then
+  assertEquals(actual, [1,2,3,4,5,6,7,8,9]);
+});
+
+Deno.test("Zahlen dürfen nur umgeklappt werden wenn Summe stimmt", function () {
+  const board = createBoard();
+
+  //When
+  const actual = tryFlip(board, [2,3],6);
+
+  //Then
+  assertEquals(actual, board);
 });
