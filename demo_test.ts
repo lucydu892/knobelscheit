@@ -1,5 +1,13 @@
 import { assertEquals } from "@std/assert";
-import {formattedAddition, rollDice, rollDie, createBoard, flipNumber, tryFlip} from "./demo.ts";
+import {
+  formattedAddition,
+  rollDice,
+  rollDie,
+  createBoard,
+  flipNumber,
+  tryFlip,
+  isGameFinish,
+} from "./demo.ts";
 
 Deno.test("3 + 5 = 8", function addTest() {
   // Arrange
@@ -52,14 +60,14 @@ Deno.test("Knobelscheit startet mit Board", function () {
   assertEquals(board, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
-Deno.test("zahl 3 kann umgeklappt werden", function (){
+Deno.test("zahl 3 kann umgeklappt werden", function () {
   const board = createBoard();
 
   //When
   const actual = flipNumber(board, [3]);
 
   //Then
-  assertEquals(actual, [1,2,4,5,6,7,8,9]);
+  assertEquals(actual, [1, 2, 4, 5, 6, 7, 8, 9]);
 });
 
 Deno.test("ungültige Zahlen werden ignoriert", function () {
@@ -69,15 +77,45 @@ Deno.test("ungültige Zahlen werden ignoriert", function () {
   const actual = flipNumber(board, [10]);
 
   //Then
-  assertEquals(actual, [1,2,3,4,5,6,7,8,9]);
+  assertEquals(actual, [1, 2, 3, 4, 5, 6, 7, 8, 9]);
 });
 
 Deno.test("Zahlen dürfen nur umgeklappt werden wenn Summe stimmt", function () {
   const board = createBoard();
 
   //When
-  const actual = tryFlip(board, [2,3],6);
+  const actual = tryFlip(board, [2, 3], 6);
 
   //Then
   assertEquals(actual, board);
 });
+
+Deno.test(
+  "Zahl darf nicht verwendet werden, wenn sie nicht mehr im Board ist",
+  function () {
+    const board = [1, 2, 4, 5, 6, 7, 8, 9];
+    //When
+    const actual = tryFlip(board, [3], 3);
+    //Then
+    assertEquals(actual, board);
+  },
+);
+
+Deno.test("Spiel ist fertig, wenn alle Zahlen umgeklappt sind", function () {
+  const board: number[] = [];
+  //When
+  const actual = isGameFinish(board);
+  //Then
+  assertEquals(actual, true);
+});
+
+Deno.test(
+  "Spiel ist nicht fertig, wenn noch Zahlen vorhanden sind",
+  function () {
+    const board = [1, 2, 3];
+    //When
+    const actual = isGameFinish(board);
+    //Then
+    assertEquals(actual, false);
+  },
+);
