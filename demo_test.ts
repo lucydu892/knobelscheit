@@ -90,8 +90,7 @@ Deno.test("Zahlen dürfen nur umgeklappt werden wenn Summe stimmt", function () 
   assertEquals(actual, board);
 });
 
-Deno.test(
-  "Zahl darf nicht verwendet werden, wenn sie nicht mehr im Board ist",
+Deno.test("Zahl darf nicht verwendet werden, wenn sie nicht mehr im Board ist",
   function () {
     const board = [1, 2, 4, 5, 6, 7, 8, 9];
     //When
@@ -109,9 +108,7 @@ Deno.test("Spiel ist fertig, wenn alle Zahlen umgeklappt sind", function () {
   assertEquals(actual, true);
 });
 
-Deno.test(
-  "Spiel ist nicht fertig, wenn noch Zahlen vorhanden sind",
-  function () {
+Deno.test("Spiel ist nicht fertig, wenn noch Zahlen vorhanden sind", function () {
     const board = [1, 2, 3];
     //When
     const actual = isGameFinish(board);
