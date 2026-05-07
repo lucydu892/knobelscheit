@@ -1,23 +1,20 @@
-import { createBoard, isGameFinish, rollDice, tryFlip } from "./demo.ts";
+import {createBoard, hasPossibleMove, isGameFinish, rollDice, tryFlip} from "./demo.ts";
 
 let board = createBoard();
 
 let tries: number = 0;
 
 console.log("Willkommen zu Knobelscheit");
+const sum = rollDice();
+
 
 while (!isGameFinish(board)) {
     tries++;
-    const sum = rollDice();
     console.log("Noch offen Zahlen: "  + board.join(" "));
     console.log("Du hast noch: " + sum + " gewürfelt");
 
     const eingabe = prompt("Welche Zahlen möchtest du umklappen (z.B. 2, 3):");
 
-    if (eingabe === null) {
-        console.log("\nBitte gib eine gültige Zahl ein!");
-        const eingabe = prompt("Welche Zahlen möchtest du umklappen (z.B. 2, 3):");
-    }
 
     if (eingabe) {
         const gewaehlteZahlen = eingabe.split(",").map((n) => Number(n.trim()));
@@ -34,5 +31,9 @@ while (!isGameFinish(board)) {
     }
 }
 
+if (!hasPossibleMove(board,sum)) {
+    console.log("Du hast " + tries + " gebraucht");
+    console.log("Du hast verloren!");
+}
+
 console.log("Gewonnen")
-console.log("Du hast " + tries + " gebraucht");
