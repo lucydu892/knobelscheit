@@ -1,13 +1,5 @@
-import { assertEquals } from "@std/assert";
-import {
-  formattedAddition,
-  rollDice,
-  rollDie,
-  createBoard,
-  flipNumber,
-  tryFlip,
-  isGameFinish,
-} from "./demo.ts";
+import {assertEquals} from "@std/assert";
+import {formattedAddition,} from "./demo.ts";
 
 Deno.test("3 + 5 = 8", function addTest() {
   // Arrange
