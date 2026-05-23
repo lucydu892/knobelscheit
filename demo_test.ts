@@ -6,6 +6,8 @@ import {
   createBoard,
   tryFlip,
   isGameFinish,
+  hasPossibleMove,
+  renderBoard,
 } from "./demo.ts";
 
 Deno.test("3 + 5 = 8", function addTest() {
@@ -87,3 +89,21 @@ Deno.test(
     assertEquals(actual, false);
   },
 );
+
+Deno.test("Prüfen ob Zug möglich ist: Es gibt eine Lösung", function () {
+  const board = [1,2,5];
+  const actual = hasPossibleMove(board, 6);
+  assertEquals(actual, true);
+})
+
+Deno.test("Prüfen ob Zug möglich ist: Es gibt keine Lösung mehr", function () {
+  const board = [1,2,5];
+  const actual = hasPossibleMove(board, 10);
+  assertEquals(actual, false);
+})
+
+Deno.test("Das Board wird als Text dargestellt", function () {
+  const board = [1,3,4];
+  const actual = renderBoard(board);
+  assertEquals(actual, "1 [x] 3 4 [x] [x] [x] [x] [x]");
+})
